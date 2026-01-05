@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WCT-RestApi</title>
+    <link rel="stylesheet" href="restapi.css">
+</head>
+<body>
+    <div class="RestApi_Heading_Container">
+        <h2>WCT-RestApi Problems and Solutions</h2>
+    </div>
+    <div class="RestApi_Questions">
+        <ul class="RestApi_problem-list">
+
+            <li class="RestApi_problem-item">
+                <button class="RestApi_problem-title">
+                    1.What is Postman?
+                </button>
+                <div class="RestApi_solution">
+                <p><strong>Explanation:</strong></p>
+                <p>
+"Postman is a powerful, collaborative API Development Platform that simplifies the entire lifecycle of an API—from development and testing to documentation and monitoring.
+
+While it is primarily known as a GUI-based HTTP Client, it is much more than that. It allows teams to:
+
+Construct Complex Requests: Unlike a browser, Postman allows us to easily send various HTTP methods (GET, POST, PUT, DELETE, etc.) with custom headers, query parameters, and complex request bodies (JSON, XML, form-data).
+
+Organize with Collections: We can group related API requests into Collections, which helps in organizing test suites and sharing them with team members.
+
+Manage Environments: It allows us to define Environment Variables (like Base URL, API Keys, or Tokens). This makes it easy to switch between different environments like Dev, QA, and Production without changing the actual request code.
+
+Automate Testing: Postman has a built-in Tests tab where we can write JavaScript-based snippets to validate response status codes, response times, and data accuracy (assertions).
+
+CI/CD Integration: Through its command-line tool, Newman, Postman collections can be integrated into CI/CD pipelines (like Jenkins or Azure DevOps) for automated regression testing."
+</p>
+<pre>
+
+</pre>
+
+</div>
+
+</li>
+<li class="RestApi_problem-item">
+    <button class="RestApi_problem-title">
+        2.Why public fields are a bad idea in API POJOs
+    </button>
+    <div class="RestApi_solution">
+      <p><strong>Explanation:</strong></p>
+      <p>
+        Why public fields are a bad idea in API POJOs
+
+Even though Jackson/Gson can serialize public fields, using them causes design problems in automation frameworks.
+
+1️⃣ No Control
+
+Public field
+
+public int age;
+
+user.age = -10;   // always allowed
+
+
+There is no way to intercept or restrict assignment.
+
+With setter
+
+public void setAge(int age) {
+    if (age < 0) throw new IllegalArgumentException();
+}
+
+
+✔ Setters provide a control point
+✔ Public fields never can
+
+2️⃣ No Validation
+
+Public field
+
+When API rules change (e.g., age range),
+
+Validation must be added in every test
+
+❌ No central enforcement
+
+With setter
+
+Validation added once
+
+All tests automatically follow it
+
+✔ Single source of truth
+
+3️⃣ Breaking Changes (API evolution)
+
+Public field
+
+public String user_name;
+
+
+API change: user_name → username
+❌ Rename field
+❌ Update all references
+
+With private field + Jackson
+
+@JsonProperty("username")
+private String user_name;
+
+
+✔ API change handled inside POJO
+✔ Test code unchanged
+
+Final takeaway
+
+Public fields couple tests to API structure.
+Private fields + setters isolate change and protect the framework.
+      </p>  
+     <pre>
+        
+     </pre> 
+
+    </div>
+
+
+
+</li>
+
+</ul>
+</div>
+
+<script>
+    const titles = document.querySelectorAll(".RestApi_problem-title");
+
+  titles.forEach(title => {
+    title.addEventListener("click", () => {
+      const solution = title.nextElementSibling;
+      solution.style.display =
+        solution.style.display === "block" ? "none" : "block";
+    });
+  });
+</script>
+</body>
+</html>
